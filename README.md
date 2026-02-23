@@ -1,4 +1,4 @@
-# UK-NSS OSU Micro-Benchmark
+# UK-NNSS OSU Micro-Benchmark
 
 **Note:** This benchmark/repository is closely based on the one used for the [NERSC-10 benchmarks](https://www.nersc.gov/systems/nersc-10/benchmarks/)
 
@@ -18,17 +18,6 @@ Stable
 ### Software
 
 - [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
-
-### Architectures
-
-- CPU: x86, Arm
-- GPU: NVIDIA, AMD, Intel
-
-### Languages and programming models
-
-- Programming languages: C
-- Parallel models: MPI, CAF
-- Accelerator offload models: CUDA, ROCm, OpenACC
 
 ## Building the benchmark
 
