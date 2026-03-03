@@ -13,9 +13,10 @@ Stable
 
 [@aturner-epcc](https://github.com/aturner-epcc)
 
-## Overview
+**Important:** Please do not contact the benchmark maintainers directly with any questions.
+All questions on the benchmark must be submitted via the procurement response mechanism.
 
-### Software
+## Software
 
 - [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
 
@@ -25,14 +26,13 @@ Stable
 
 - [OSU MPI Micro-Benchmarks 7.5.2](https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz)
 
-Any modifications made to the source code and build/installation files must be 
-shared as part of the offerer submission.
 
 ### Permitted modifications
 
 The only permitted modifications allowed are those that
 modify the source code or build/installation files to resolve unavoidable compilation or
-runtime errors.
+runtime errors. Any modifications must be fully documented
+(e.g., as a pull request, diff or patch file) and reported with the benchmark results.
 
 ### Manual build
 
@@ -42,43 +42,9 @@ website](https://mvapich.cse.ohio-state.edu/benchmarks/).
 We provide an example build process based on the process used to install on the
 [IsambardAI](https://docs.isambard.ac.uk/specs/#system-specifications-isambard-ai-phase-2) system.
 
-Downloaded and unpack the source code:
+- [Example build instructions on IsambardAI](build_isambardai.md)
 
-```bash
-wget https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz
-tar -xzf osu-micro-benchmarks-7.5.2.tar.gz
-```
-
-Build the micro-benchmarks with GPU support via CUDA:
-
-```bash
-module load craype-network-ofi
-module load PrgEnv-gnu 
-module load gcc-native/13.2 
-module load cray-mpich
-module load cuda/12.6
-module load craype-accel-nvidia90
-module load craype-arm-grace
-module load cray-python
-module load cray-fftw
-
-export CUDA_PATH=/opt/nvidia/hpc_sdk/Linux_aarch64/24.11/cuda/12.6
-
-export MPICH_GPU_SUPPORT_ENABLED=1
-
-../configure CC=cc CXX=CC FC=ftn \
-   --prefix=/projects/u6cb/benchmarks/OSU/7.5.2-gcc \
-   --enable-cuda \
-   --with-cuda-include=$CUDA_PATH/include \
-   --with-cuda-libpath=$CUDA_PATH/lib
-
-make -j16
-make -j16 install 
-```
-
-The `--prefix` option will cause the micro-benchmark executables to
-be installed in a directory named `libexec/osu-micro-benchmarks` in
-the directory specified in the prefix option.
+## Running the benchmark
 
 OMB provides a script named `get_local_rank` that may (optionally) used
 as a wrapper function when launching the OMB tests. Its purpose is to
@@ -94,9 +60,7 @@ within the `get_local_rank` script.
 As an example, on IsambardAI, MPI jobs are started using the SLURM PMI, and
 the `LOCAL_RANK` may be set using `export LOCAL_RANK=$SLURM_LOCALID`.
 
-## Running the benchmark
-
-### Required Tests
+### Required tests
 
 The full OMB suite tests numerous communication patterns. Only the
 benchmarks listed in the following table are required:
@@ -104,12 +68,12 @@ benchmarks listed in the following table are required:
 
 | Test                |Description| Message <br/> Size | Nodes <br> Used | Ranks <br> Used |
 |---                  |---        |---                |--- |--- |
-| osu_latency         | Point-to-Point <br/> Latency |  8  B | 2 | 1 per node |
+| osu_latency         | Point-to-Point <br/> Latency |  8 B | 2 | 1 per node |
 | osu_bibw            | Point-to-Point <br/> Bi-directional <br> bandwidth |  1 MB | 2 | 1 per node |
 | osu_mbw_mr          | Point-to-Point <br/> Multi-Bandwidth <br>& Message Rate | 16 KB | 2 | Host-to-Host (two tests) :<br>     - 1 per NIC<br/>    - 1 per core <br/> Device-to-Device (two tests):<br/>    - 1 per NIC<br/>    - 1 per accelerator |
-| osu_get_acc_latency | Point-to-Point <br/> One-sided Accumulate Latency |  8  B | 2 | 1 per node |
+| osu_get_acc_latency | Point-to-Point <br/> One-sided Accumulate Latency |  8 B | 2 | 1 per node |
 | osu_allreduce       | All-reduce Latency | 8B, 25 MB | full-system | 1 per NIC |
-| osu_alltoall        | All-to-all Latency |  1 MB | full-system | 1 per NIC <br/> odd process count |
+| osu_alltoall        | All-to-all Latency | 1 MB | full-system | 1 per NIC <br/> odd process count |
 
 For the point-to-point tests (those that that use two (2) nodes), the
 nodes should be the maximum distance (number of hops) apart in the
@@ -190,7 +154,7 @@ The following example performance data is from the IsambardAI system
 - Point-to-point, accelerator: [example_output/OMB_p2p_accel-2252830.out](example_output/OMB_p2p_accel-2252830.out)
 - Point-to-point, host: [example_output/OMB_p2p_host-2252822.out](example_output/OMB_p2p_host-2252822.out)
 - Collectives, accelerator (512 nodes): [example_output/OMB_coll_accel-2253239.out](example_output/OMB_coll_accel-2253239.out)
-- Collectives, host (512 nodes):
+- Collectives, host (512 nodes): [example_output/OMB_coll_host-2345626.out](example_output/OMB_coll_host-2345626.out) 
 
 ## License
 
