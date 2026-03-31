@@ -5,17 +5,6 @@
 The OSU micro-benchmark suite (OMB) tests the performance of network
 communication functions for MPI and other communication interfaces.
 
-## Status
-
-Stable
-
-## Maintainers
-
-[@aturner-epcc](https://github.com/aturner-epcc)
-
-**Important:** Please do not contact the benchmark maintainers directly with any questions.
-All questions on the benchmark must be submitted via the procurement response mechanism.
-
 ## Software
 
 - [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
