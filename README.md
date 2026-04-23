@@ -1,37 +1,61 @@
 # UK-NNSS OSU Micro-Benchmark
 
-**Note:** This benchmark/repository is closely based on the one used for the [NERSC-10 benchmarks](https://www.nersc.gov/systems/nersc-10/benchmarks/)
+This repository contains information on the OSU benchmark for the UK NNSS
+procurement. 
 
+> [!IMPORTANT]
+> Please do not contact the benchmark or code maintainers directly with any questions. All questions must be submitted via the procurement response mechanism.
+
+## Benchmark Overview
 The OSU micro-benchmark suite (OMB) tests the performance of network
 communication functions for MPI and other communication interfaces.
 
 ## Software
 
-- [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
+Website: [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
+
+> [!CAUTION] All results submitted should be based on the following version:
+> - [OSU MPI Micro-Benchmarks 7.5.2](https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz)
+
+> [!NOTE]
+> This benchmark/repository is closely based on the one used for the [NERSC-10 benchmarks](https://www.nersc.gov/systems/nersc-10/benchmarks/)
+
 
 ## Building the benchmark
 
-**Important:** All results submitted should be based on the following version:
+Compiling the code involves the following steps:
+1. Configuring the build using
+   ```bash
+   ./configure
+   ```
+   Additional options can be provided for building with CUDA:
+   ```bash
+   --enable-cuda --with-cuda-include=/path/to/cuda/include \
+     --with-cuda-libpath=/path/to/cuda/lib
+   ```
+   or building with ROCm
+   ```bash
+   --enable-rocm --with-rocm=/path/to/rocm
+   ```
+   The CC and CXX environmental variables can be overridden to specify the mpicc and mpicxx executables.
 
-- [OSU MPI Micro-Benchmarks 7.5.2](https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz)
+2. Build the benchmark using
+   ```bash
+   make
+   ```
 
+We provide an example build process based on the process used to install on the
+[IsambardAI](https://docs.isambard.ac.uk/specs/#system-specifications-isambard-ai-phase-2) system.
 
-### Permitted modifications
+- [Example build instructions on IsambardAI](build_isambardai.md)
+
+### Pre-approved code modifications
 
 The only permitted modifications allowed are those that
 modify the source code or build/installation files to resolve unavoidable compilation or
 runtime errors. Any modifications must be fully documented
 (e.g., as a pull request, diff or patch file) and reported with the benchmark results.
 
-### Manual build
-
-The OMB source code is distributed by the [MVAPICH
-website](https://mvapich.cse.ohio-state.edu/benchmarks/).
-
-We provide an example build process based on the process used to install on the
-[IsambardAI](https://docs.isambard.ac.uk/specs/#system-specifications-isambard-ai-phase-2) system.
-
-- [Example build instructions on IsambardAI](build_isambardai.md)
 
 ## Running the benchmark
 
@@ -124,26 +148,16 @@ If the test is using device memory, then it is enabled by the `-d`
 device option with the appropriate interface (e.g. `-d [ROCm, CUDA,
 OpenACC] D D`).
 
-## Reporting Results
+## Results
 
-The bidder should provide:
-
-- Details of any changes made to the OSU micro-benchmark source code
-  and modifications to any build files (e.g. configure scripts, makefiles)
-- Details of the build process for the OSU micro-benchmark software 
-  for both the host-to-host and device-to-device versions
-- Details on how the tests were run, including any batch job submission
-  scripts
-- The benchmark results
-
-## Example performance data
+## Reference data
 
 The following example performance data is from the IsambardAI system
 
-- Point-to-point, accelerator: [example_output/OMB_p2p_accel-2252830.out](example_output/OMB_p2p_accel-2252830.out)
-- Point-to-point, host: [example_output/OMB_p2p_host-2252822.out](example_output/OMB_p2p_host-2252822.out)
-- Collectives, accelerator (512 nodes): [example_output/OMB_coll_accel-2253239.out](example_output/OMB_coll_accel-2253239.out)
-- Collectives, host (512 nodes): [example_output/OMB_coll_host-2345626.out](example_output/OMB_coll_host-2345626.out) 
+- Point-to-point, accelerator: [example-output/OMB_p2p_accel-2252830.out](example-output/OMB_p2p_accel-2252830.out)
+- Point-to-point, host: [example-output/OMB_p2p_host-2252822.out](example-output/OMB_p2p_host-2252822.out)
+- Collectives, accelerator (512 nodes): [example-output/OMB_coll_accel-2253239.out](example-output/OMB_coll_accel-2253239.out)
+- Collectives, host (512 nodes): [example-output/OMB_coll_host-2345626.out](example-output/OMB_coll_host-2345626.out) 
 
 ## License
 
