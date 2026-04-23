@@ -14,7 +14,8 @@ communication functions for MPI and other communication interfaces.
 
 Website: [OSU MPI Micro-Benchmarks](https://mvapich.cse.ohio-state.edu/benchmarks/)
 
-> [!CAUTION] All results submitted should be based on the following version:
+> [!CAUTION]
+> All results submitted should be based on the following version:
 > - [OSU MPI Micro-Benchmarks 7.5.2](https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz)
 
 > [!NOTE]
@@ -43,6 +44,7 @@ Compiling the code involves the following steps:
    ```bash
    make
    ```
+Full details of the build process and configuration options are provided in the OSU code repository.
 
 We provide an example build process based on the process used to install on the
 [IsambardAI](https://docs.isambard.ac.uk/specs/#system-specifications-isambard-ai-phase-2) system.
