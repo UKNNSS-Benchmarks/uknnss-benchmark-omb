@@ -78,67 +78,38 @@ the `LOCAL_RANK` may be set using `export LOCAL_RANK=$SLURM_LOCALID`.
 ### Required tests
 
 The full OMB suite tests numerous communication patterns. Only the
-benchmarks listed in the following table are required:
-
+benchmark described below is required:
 
 | Test                |Description| Message <br/> Size | Nodes <br> Used | Ranks <br> Used |
 |---                  |---        |---                |--- |--- |
-| osu_latency         | Point-to-Point <br/> Latency |  8 B | 2 | 1 per node |
-| osu_bibw            | Point-to-Point <br/> Bi-directional <br> bandwidth |  1 MB | 2 | 1 per node |
-| osu_mbw_mr          | Point-to-Point <br/> Multi-Bandwidth <br>& Message Rate | 16 KB | 2 | Host-to-Host (two tests) :<br>     - 1 per NIC<br/>    - 1 per core <br/> Device-to-Device (two tests):<br/>    - 1 per NIC<br/>    - 1 per accelerator |
-| osu_get_acc_latency | Point-to-Point <br/> One-sided Accumulate Latency |  8 B | 2 | 1 per node |
-| osu_allreduce       | All-reduce Latency | 8B, 25 MB | full-system | 1 per NIC |
-| osu_alltoall        | All-to-all Latency | 1 MB | full-system | 1 per NIC <br/> odd process count |
+| osu_allreduce       | All-reduce Latency | 25 MiB | full-system | 1 per NIC |
 
-For the point-to-point tests (those that that use two (2) nodes), the
-nodes should be the maximum distance (number of hops) apart in the
-network topology.
-
-For the all-to-all test, the total number of ranks must be odd in order
+The total number of ranks must be odd in order
 to circumvent software optimisations that would avoid stressing the
 network bisection bandwidth. If the product Nodes_Used x NICs_per_node
 is even, then the number of ranks used should be one less than this
 product.
 
 On systems that include accelerator devices, the tests should be
-executed twice: once to test performance to and from host memory, and
-again to to measure latency to and from device memory. Toggling between
-these tests requires configuring and compiling with the appropriate
+executed to measure latency to and from device memory. This requires configuring and compiling with the appropriate
 option (see `./configure --help`).
 
 ### Benchmark execution
 
-Examples of job scripts that run the required tests
-are located in the `run` directory.
-The job scripts should be edited to reflect
+An example job script is located in the `run` directory.
+The job script should be edited to reflect
 the architecture of the target system as follows:
 
-- For all tests (`run_*.sh`),
-  specify the number of NICs per node
+- The number of NICs per node should be specified
   by setting the `j` variable`.
 
-- For point-to-point tests (`run_p2p_[host,accel].sh`),
-  specify a pair of maximally distant nodes
-  by setting the `SBATCH -w` option (or equivalent for other schedulers).
-  Note that selection of an appropriate pair of nodes
-  requires knowing the nodes' placement on the network topology.
-  Other mechanisms for controlling node placement (besides `-w`)
-  may be used if available.
-
-- For tests of collective operations (`run_coll_[host,accel].sh`),
-  specify the number of nodes in the full system
+- The number of nodes in the full system should be specified
   by setting the `SBATCH --nodes` option.
 
-- For point-to-point tests between host processors (`run_p2p_host.sh`),
-  specify the number of CPU cores per node
-  by setting the `k` variable.
-
-- For tests using accelerator devices (`run_[p2p,coll]_accel.sh`),
-  specify the number of devices per node
+- The number of devices per node should be specified
   by setting the `a` variable.
 
-- For tests using accelerator devices (`run_[p2p,coll]_accel.sh`),
-  specify the device interface interface to be used
+- The device interface to be used should be specified
   by providing the appropriate option to the `osu_<test>` command
   (i.e. `-d[ROCm,CUDA,OpenACC]` ).
 
@@ -156,12 +127,17 @@ OpenACC] D D`).
 
 The following example performance data is from the IsambardAI system
 
-- Point-to-point, accelerator: [example-output/OMB_p2p_accel-2252830.out](example-output/OMB_p2p_accel-2252830.out)
-- Point-to-point, host: [example-output/OMB_p2p_host-2252822.out](example-output/OMB_p2p_host-2252822.out)
 - Collectives, accelerator (512 nodes): [example-output/OMB_coll_accel-2253239.out](example-output/OMB_coll_accel-2253239.out)
-- Collectives, host (512 nodes): [example-output/OMB_coll_host-2345626.out](example-output/OMB_coll_host-2345626.out) 
 
 ## License
 
 This benchmark description and associated files are released under the
 MIT license.
+
+## Changelog
+
+The following changes to this document have been made since initial release:
+
+| <div style="width:90px">Date</div> | Change |
+|-----------:|--------|
+| 2026-06-25 | Update required tests |
