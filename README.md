@@ -82,7 +82,7 @@ benchmark described below is required:
 
 | Test                |Description| Message <br/> Size | Nodes <br> Used | Ranks <br> Used |
 |---                  |---        |---                |--- |--- |
-| osu_allreduce       | All-reduce Latency | 25 MiB | full-system | 1 per NIC |
+| osu_allreduce       | All-reduce Latency | 25 MiB | 256 nodes | 1 per NIC |
 
 The total number of ranks must be odd in order
 to circumvent software optimisations that would avoid stressing the
