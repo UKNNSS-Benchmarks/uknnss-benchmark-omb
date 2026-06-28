@@ -49,18 +49,5 @@ export MPICH_GPU_SUPPORT_ENABLED=1
 echo -n Nodes:$N_any   Tasks:$n_any
 srun ${srunopts} --nodes=${N_any} --ntasks=${n_any} --ntasks-per-node=${j} --cpus-per-task=${jstride} \
      ${OMB_DIR}/get_local_rank  \
-     ${OMB_COLL}/osu_allreduce -m 8:8 -d cuda
-echo
-
-echo -n Nodes:$N_any   Tasks:$n_any
-srun ${srunopts} --nodes=${N_any} --ntasks=${n_any} --ntasks-per-node=${j} --cpus-per-task=${jstride} \
-     ${OMB_DIR}/get_local_rank  \
      ${OMB_COLL}/osu_allreduce -m 26214400:26214400 -d cuda
 echo
-
-echo -n Nodes:$N_odd   Tasks:$n_odd
-srun ${srunopts} --nodes=${N_odd} --ntasks=${n_odd} --ntasks-per-node=${j} --cpus-per-task=${jstride} \
-     ${OMB_DIR}/get_local_rank \
-     ${OMB_COLL}/osu_alltoall -m 1048576:1048576 -d cuda
-echo
-
